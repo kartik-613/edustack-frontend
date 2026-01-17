@@ -1,16 +1,78 @@
-# React + Vite
+# EduStack Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+EduStack Frontend is a modern, responsive React application that allows students and teachers to access university-wise syllabus, previous year question papers (PYQs), answers, and notes through a structured and user-friendly interface.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+### Student
+- Browse syllabus and PYQs for free
+- Premium access to answers and notes
+- University → Course → Branch → Semester → Subject flow
+- Subscription-based content access
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Teacher
+- Full premium access
+- Download syllabus and notes
+- (Optional) Upload content for approval
 
-## Expanding the ESLint configuration
+### Admin
+- Dashboard access
+- Content moderation
+- User & subscription management
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## User Flow
+
+```text
+Landing Page
+ → Select University
+ → Select Course
+ → Select Branch
+ → Select Semester
+ → Select Subject
+ → View:
+    - Syllabus
+    - PYQs
+    - Answers (Premium)
+    - Notes (Premium)
+
+==============================================================
+
+EduStack/
+│
+├── frontend/                 # React App
+│   ├── public/
+│   │   └── index.html
+│   │
+│   └── src/
+│       ├── assets/           # Images, icons
+│       ├── components/       # Reusable UI components
+│       │   ├── common/       # Button, Modal, Loader
+│       │   ├── layout/       # Navbar, Footer
+│       │   └── cards/        # SubjectCard, PaperCard
+│       │
+│       ├── pages/            # Route-based pages
+│       │   ├── Landing/
+│       │   ├── Auth/
+│       │   ├── University/
+│       │   ├── Course/
+│       │   ├── Branch/
+│       │   ├── Semester/
+│       │   ├── Subject/
+│       │   ├── Content/      # Syllabus / PYQs / Answers
+│       │   ├── Teacher/
+│       │   └── Admin/
+│       │
+│       ├── routes/           # Protected routes
+│       ├── context/          # Auth, User, Subscription
+│       ├── hooks/            # Custom hooks
+│       ├── services/         # API calls
+│       ├── utils/            # Helpers
+│       ├── styles/
+│       ├── App.jsx
+│       └── main.jsx
+
+=============================================================
