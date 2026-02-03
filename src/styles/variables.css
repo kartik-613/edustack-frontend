@@ -1,0 +1,7 @@
+:root {
+  --color-primary: #6366f1; /* indigo-500 */
+  --color-bg-dark: #111827;  /* gray-900 */
+  --color-bg-light: #1f2937; /* gray-800 */
+  --color-text-light: #f3f4f6; /* gray-100 */
+  --color-text-muted: #9ca3af; /* gray-400 */
+}

@@ -1,14 +1,19 @@
-import React from 'react'
+import React from "react";
+import AppRoutes from "./routes/AppRoutes";
+import AuthProvider from "./context/AuthContext";
+import UserProvider from "./context/UserContext";
+import SubscriptionProvider from "./context/SubscriptionContext";
 
 const App = () => {
   return (
-    <div className='w-full h-screen flex items-center justify-center
-    bg-gray-300'>
-      <h1 className='text-3xl font-bold underline text-center'>
-        Hello, EduStack!
-      </h1>
-    </div>
-  )
-}
+    <AuthProvider>
+      <UserProvider>
+        <SubscriptionProvider>
+          <AppRoutes />
+        </SubscriptionProvider>
+      </UserProvider>
+    </AuthProvider>
+  );
+};
 
-export default App
+export default App;

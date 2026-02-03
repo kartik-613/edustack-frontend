@@ -1,0 +1,13 @@
+.navbar {
+  background-color: var(--color-bg-dark);
+  border-bottom: 1px solid #1f2937;
+}
+
+.navbar a {
+  color: var(--color-text-muted);
+  transition: color 0.3s;
+}
+
+.navbar a:hover {
+  color: var(--color-text-light);
+}
