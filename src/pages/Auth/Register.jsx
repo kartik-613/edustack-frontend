@@ -47,77 +47,91 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-black text-white">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-[#020202] text-gray-900 dark:text-white transition-colors duration-300">
       <Navbar />
-      <section className="flex-1 flex items-center justify-center px-4 py-24">
-        <div className="bg-gray-900/50 backdrop-blur-xl border border-gray-800 rounded-3xl p-8 sm:p-12 w-full max-w-md shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-32 h-32 bg-blue-500/10 blur-3xl -ml-16 -mt-16"></div>
+      <section className="flex-1 flex items-center justify-center px-6 py-24 relative overflow-hidden">
+        {/* Background Decoration */}
+        <div className="absolute top-1/4 -right-20 w-72 h-72 bg-blue-500/10 dark:bg-blue-500/5 blur-[100px] rounded-full"></div>
+        <div className="absolute bottom-1/4 -left-20 w-72 h-72 bg-indigo-500/10 dark:bg-indigo-500/5 blur-[100px] rounded-full"></div>
 
-          <h1 className="text-3xl font-bold text-white mb-2 text-center">
-            Create Account
-          </h1>
-          <p className="text-gray-500 text-center mb-8">Join the EduStack learning platform</p>
+        <div className="bg-gray-50 dark:bg-gray-900/40 backdrop-blur-2xl border border-gray-200 dark:border-gray-800 rounded-[2.5rem] p-8 sm:p-12 w-full max-w-md shadow-2xl relative z-10 animate-in fade-in slide-in-from-bottom-8 duration-700">
+          <div className="text-center mb-10">
+            <h1 className="text-3xl font-black mb-2 tracking-tight">
+              Create <span className="text-blue-600 dark:text-blue-500">Account</span>
+            </h1>
+            <p className="text-gray-500 dark:text-gray-400 font-medium">Join the EduStack learning platform</p>
+          </div>
 
-          {error && <p className="text-red-500 mb-6 bg-red-500/10 p-3 rounded-xl border border-red-500/20 text-sm text-center">{error}</p>}
+          {error && <p className="text-red-500 mb-8 bg-red-500/10 p-4 rounded-2xl border border-red-500/20 text-sm font-medium text-center">{error}</p>}
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <div className="space-y-1">
-              <label className="text-xs font-bold text-gray-500 uppercase ml-1">Full Name</label>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+            <div className="space-y-2">
+              <label className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest ml-1">Full Name</label>
               <input
                 type="text"
                 required
-                className="w-full px-4 py-3 rounded-xl bg-gray-800/50 text-white border border-gray-700 focus:outline-none focus:border-blue-500 transition-colors"
+                placeholder="John Doe"
+                className="w-full px-5 py-3.5 rounded-2xl bg-white dark:bg-gray-800/50 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 focus:outline-none focus:border-blue-500 dark:focus:border-blue-500 transition-all shadow-sm"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
-            <div className="space-y-1">
-              <label className="text-xs font-bold text-gray-500 uppercase ml-1">Email Address</label>
+            <div className="space-y-2">
+              <label className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest ml-1">Email Address</label>
               <input
                 type="email"
                 required
-                className="w-full px-4 py-3 rounded-xl bg-gray-800/50 text-white border border-gray-700 focus:outline-none focus:border-blue-500 transition-colors"
+                placeholder="john@example.com"
+                className="w-full px-5 py-3.5 rounded-2xl bg-white dark:bg-gray-800/50 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 focus:outline-none focus:border-blue-500 dark:focus:border-blue-500 transition-all shadow-sm"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <div className="space-y-1">
-              <label className="text-xs font-bold text-gray-500 uppercase ml-1">Password</label>
+            <div className="space-y-2">
+              <label className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest ml-1">Password</label>
               <input
                 type="password"
                 required
-                className="w-full px-4 py-3 rounded-xl bg-gray-800/50 text-white border border-gray-700 focus:outline-none focus:border-blue-500 transition-colors"
+                placeholder="••••••••"
+                className="w-full px-5 py-3.5 rounded-2xl bg-white dark:bg-gray-800/50 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 focus:outline-none focus:border-blue-500 dark:focus:border-blue-500 transition-all shadow-sm"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <div className="space-y-1">
-              <label className="text-xs font-bold text-gray-500 uppercase ml-1">Account Type</label>
-              <select
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl bg-gray-800/50 text-white border border-gray-700 focus:outline-none focus:border-blue-500 transition-colors appearance-none"
-              >
-                <option value="student">Student</option>
-                <option value="teacher">Teacher</option>
-                <option value="admin">Admin (Restricted)</option>
-              </select>
+            <div className="space-y-2">
+              <label className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest ml-1">Account Type</label>
+              <div className="relative">
+                <select
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  className="w-full px-5 py-3.5 rounded-2xl bg-white dark:bg-gray-800/50 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 focus:outline-none focus:border-blue-500 dark:focus:border-blue-500 transition-all shadow-sm appearance-none cursor-pointer"
+                >
+                  <option value="student">Student</option>
+                  <option value="teacher">Teacher</option>
+                  <option value="admin">Admin (Restricted)</option>
+                </select>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </div>
+              </div>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="mt-4 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold transition-all transform active:scale-95 shadow-lg shadow-blue-900/20 disabled:opacity-50"
+              className="mt-4 py-4 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-black tracking-wide transition-all transform active:scale-95 shadow-xl shadow-blue-500/20 disabled:opacity-50"
             >
-              {loading ? "Processing..." : "Create Account"}
+              {loading ? "PROCESSING..." : "CREATE ACCOUNT"}
             </button>
           </form>
 
-          <div className="mt-8 text-gray-400 text-sm text-center">
+          <div className="mt-10 text-gray-500 dark:text-gray-400 text-sm font-medium text-center">
             Already have an account?{" "}
             <button
               onClick={() => navigate("/login")}
-              className="text-blue-500 font-bold hover:text-blue-400 transition"
+              className="text-blue-600 dark:text-blue-500 font-black hover:underline"
             >
               Log In
             </button>

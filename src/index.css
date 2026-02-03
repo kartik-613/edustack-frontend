@@ -1,8 +1,27 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 @layer base {
+  :root {
+    --bg-primary: #ffffff;
+    --text-primary: #111827;
+    --bg-secondary: #f3f4f6;
+    --border-primary: #e5e7eb;
+  }
+
+  .dark {
+    --bg-primary: #000000;
+    --text-primary: #ffffff;
+    --bg-secondary: #0f172a;
+    --border-primary: #1e293b;
+  }
+
   body {
-    @apply bg-black text-white selection:bg-blue-500/30 selection:text-white;
+    @apply transition-colors duration-300;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    @apply selection:bg-blue-500/30 selection:text-white;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 

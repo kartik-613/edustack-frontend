@@ -41,22 +41,26 @@ const RoleSelection = () => {
     ];
 
     return (
-        <div className="min-h-screen bg-[#020202] flex flex-col items-center justify-center p-6 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-900 via-black to-black">
-            <div className="text-center mb-16 animate-in fade-in slide-in-from-bottom-4 duration-1000">
-                <h1 className="text-5xl font-black text-white mb-4 tracking-tighter">
-                    Edu<span className="text-blue-500">Stack</span>
+        <div className="min-h-screen bg-white dark:bg-[#020202] text-gray-900 dark:text-white flex flex-col items-center justify-center p-6 relative overflow-hidden transition-colors duration-300">
+            {/* Background Decoration */}
+            <div className="absolute top-1/4 -right-40 w-96 h-96 bg-blue-500/10 dark:bg-blue-500/5 blur-[120px] rounded-full"></div>
+            <div className="absolute bottom-1/4 -left-40 w-96 h-96 bg-purple-500/10 dark:bg-purple-500/5 blur-[120px] rounded-full"></div>
+
+            <div className="text-center mb-16 relative z-10 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+                <h1 className="text-5xl font-black mb-4 tracking-tighter text-gray-900 dark:text-white">
+                    Edu<span className="text-blue-600 dark:text-blue-500">Stack</span>
                 </h1>
-                <p className="text-gray-400 text-lg max-w-md mx-auto">
+                <p className="text-gray-500 dark:text-gray-400 text-lg max-w-md mx-auto font-medium">
                     Welcome! Please select your role to continue to your personalized dashboard.
                 </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl relative z-10">
                 {roles.map((role, index) => (
                     <button
                         key={role.id}
                         onClick={() => handleRoleSelect(role.id)}
-                        className={`group relative p-8 rounded-[2.5rem] bg-gray-900/40 border border-gray-800 hover:border-white/20 transition-all duration-500 text-left overflow-hidden shadow-2xl ${role.shadow} hover:-translate-y-2 animate-in fade-in slide-in-from-bottom-8`}
+                        className={`group relative p-10 rounded-[3rem] bg-gray-50 dark:bg-gray-900/40 border border-gray-200 dark:border-gray-800 hover:border-blue-500/30 transition-all duration-500 text-left overflow-hidden shadow-sm dark:shadow-2xl hover:-translate-y-2 animate-in fade-in slide-in-from-bottom-8`}
                         style={{ animationDelay: `${index * 150}ms` }}
                     >
                         {/* Background Glow */}
@@ -67,17 +71,17 @@ const RoleSelection = () => {
                                 {role.icon}
                             </div>
 
-                            <h2 className="text-3xl font-bold text-white mb-3 tracking-tight">
+                            <h2 className="text-3xl font-black mb-3 tracking-tight text-gray-900 dark:text-white">
                                 {role.title}
                             </h2>
-                            <p className="text-gray-400 leading-relaxed mb-8">
+                            <p className="text-gray-500 dark:text-gray-400 leading-relaxed mb-10 font-medium">
                                 {role.desc}
                             </p>
 
-                            <div className="flex items-center text-sm font-bold text-white uppercase tracking-widest bg-white/5 w-fit px-4 py-2 rounded-full border border-white/5 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                            <div className="flex items-center text-[10px] font-black uppercase tracking-[0.2em] text-blue-600 dark:text-blue-500 bg-blue-50 dark:bg-blue-500/10 w-fit px-6 py-3 rounded-2xl border border-blue-100 dark:border-blue-500/20 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 shadow-sm">
                                 Continue
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M9 5l7 7-7 7" />
                                 </svg>
                             </div>
                         </div>
@@ -85,7 +89,7 @@ const RoleSelection = () => {
                 ))}
             </div>
 
-            <div className="mt-20 text-gray-600 text-sm font-medium animate-pulse">
+            <div className="mt-20 text-gray-400 dark:text-gray-600 text-[10px] font-black uppercase tracking-[0.3em] z-10">
                 Secure Academic Environment &copy; 2026 EduStack Inc.
             </div>
         </div>

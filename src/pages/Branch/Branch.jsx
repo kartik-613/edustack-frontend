@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../../components/layout/Navbar";
 import Footer from "../../components/layout/Footer";
@@ -7,6 +7,7 @@ import useFetch from "../../hooks/useFetch";
 const Branch = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchQuery, setSearchQuery] = useState("");
 
   const searchParams = new URLSearchParams(location.search);
   const universityId = searchParams.get("universityId");
@@ -17,6 +18,15 @@ const Branch = () => {
     [universityId, courseId]
   );
 
+  const filteredBranches = useMemo(() => {
+    if (!branches) return [];
+    return branches.filter(
+      (branch) =>
+        branch.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        branch.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [branches, searchQuery]);
+
   const handleSelectBranch = (branch) => {
     navigate(
       `/semesters?universityId=${universityId}&courseId=${courseId}&branchId=${branch._id}`
@@ -24,30 +34,69 @@ const Branch = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#020202] text-white">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-[#020202] text-gray-900 dark:text-white transition-colors">
       <Navbar />
 
       <main className="flex-grow pt-32 pb-20 px-6">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-16 animate-in fade-in slide-in-from-top-4 duration-700">
-            <div className="flex items-center gap-2 text-gray-500 mb-6 text-[10px] font-bold uppercase tracking-widest">
-              <button onClick={() => navigate("/universities")} className="hover:text-white transition-colors">Universities</button>
+            <div className="flex items-center gap-2 text-gray-400 dark:text-gray-500 mb-6 text-[10px] font-bold uppercase tracking-widest">
+              <button
+                onClick={() => navigate("/universities")}
+                className="hover:text-blue-600 dark:hover:text-white transition-colors"
+              >
+                Universities
+              </button>
               <span>/</span>
-              <button onClick={() => navigate(`/courses?universityId=${universityId}`)} className="hover:text-white transition-colors">Courses</button>
+              <button
+                onClick={() => navigate(`/courses?universityId=${universityId}`)}
+                className="hover:text-blue-600 dark:hover:text-white transition-colors"
+              >
+                Courses
+              </button>
             </div>
             <h1 className="text-4xl md:text-5xl font-black mb-4 tracking-tight">
-              Select Your <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-500">Branch</span>
+              Select Your <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-indigo-600">Branch</span>
             </h1>
-            <p className="text-gray-500 text-lg">
+            <p className="text-gray-500 dark:text-gray-400 text-lg">
               Choose your engineering department or specialization.
             </p>
+          </div>
+
+          {/* Search Bar */}
+          <div className="mb-12 relative group animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-indigo-600/10 blur-xl group-hover:blur-2xl transition-all duration-500 opacity-50"></div>
+            <div className="relative flex items-center bg-gray-50/50 dark:bg-gray-900/40 backdrop-blur-2xl border border-gray-200 dark:border-gray-800 group-hover:border-blue-500/50 rounded-2xl p-1.5 transition-all duration-300">
+              <div className="flex-1 flex items-center px-4">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input
+                  type="text"
+                  placeholder="Find your specialization..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full bg-transparent border-none focus:ring-0 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 px-4 py-3 text-lg font-medium"
+                />
+              </div>
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-xl transition-colors mr-2 text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              )}
+            </div>
           </div>
 
           {loading && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {Array.from({ length: 4 }).map((_, i) => (
-                <div key={i} className="h-48 bg-gray-900/50 border border-gray-800 rounded-3xl animate-pulse" />
+                <div key={i} className="h-48 bg-gray-100 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 rounded-3xl animate-pulse" />
               ))}
             </div>
           )}
@@ -58,31 +107,44 @@ const Branch = () => {
             </div>
           )}
 
-          {!loading && branches?.length > 0 && (
+          {!loading && filteredBranches?.length > 0 && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {branches.map((branch, index) => (
+              {filteredBranches.map((branch, index) => (
                 <button
                   key={branch._id}
                   onClick={() => handleSelectBranch(branch)}
-                  className="group p-8 bg-gray-900/40 border border-gray-800 rounded-[2rem] text-left hover:border-blue-500/30 hover:bg-gray-800/40 transition-all duration-300 animate-in fade-in slide-in-from-bottom-4 shadow-xl"
+                  className="group p-8 bg-gray-50 dark:bg-gray-900/40 border border-gray-200 dark:border-gray-800 rounded-[2rem] text-left hover:border-blue-500/30 hover:bg-gray-100 dark:hover:bg-gray-800/40 transition-all duration-300 animate-in fade-in slide-in-from-bottom-4 shadow-sm dark:shadow-xl"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <div className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition-transform">
+                  <div className="w-12 h-12 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition-transform shadow-inner">
                     🛠️
                   </div>
-                  <h3 className="text-xl font-bold mb-2 group-hover:text-blue-400 transition-colors">
+                  <h3 className="text-xl font-bold mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                     {branch.name}
                   </h3>
-                  <p className="text-gray-500 text-sm">
+                  <p className="text-gray-500 dark:text-gray-400 text-sm">
                     {branch.description}
                   </p>
                 </button>
               ))}
             </div>
           )}
+
+          {!loading && filteredBranches?.length === 0 && (
+            <div className="text-center py-16 bg-gray-50 dark:bg-gray-900/10 border border-dashed border-gray-200 dark:border-gray-800 rounded-[2.5rem] animate-in fade-in slide-in-from-bottom-4">
+              <div className="text-5xl mb-6 opacity-30">🛠️</div>
+              <h3 className="text-lg font-bold text-gray-400 dark:text-gray-500">No specialization found for "{searchQuery}"</h3>
+              <p className="text-sm text-gray-400 dark:text-gray-600 mt-2">Try searching with a broader keyword.</p>
+              <button
+                onClick={() => setSearchQuery("")}
+                className="mt-6 px-5 py-2 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 rounded-xl text-xs font-bold transition-colors shadow-sm"
+              >
+                Clear Search
+              </button>
+            </div>
+          )}
         </div>
       </main>
-
       <Footer />
     </div>
   );
